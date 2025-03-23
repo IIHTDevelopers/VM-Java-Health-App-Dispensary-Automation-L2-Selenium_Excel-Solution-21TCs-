@@ -1,8 +1,12 @@
 package pages;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -103,6 +107,35 @@ public class dispensary_Pages extends StartupPage {
 	By isDefaultCheckBox = By.xpath("(//label[@class='mt-checkbox mt-checkbox-outline'])[3]//span");
 	By bookingOTSchedulePageCloseButtonElement = By.xpath("//a[.='X']");
 	
+	
+	public By getPageBarFixedLocator(String navBarName) {
+		if (navBarName.equalsIgnoreCase("list requests")) {
+			navBarName = "ImagingRequisitionList";
+		} else if (navBarName.equalsIgnoreCase("list reports")) {
+			navBarName = "ImagingReportsList";
+		} else if (navBarName.equalsIgnoreCase("edit doctors")) {
+			navBarName = "EditDoctors";
+		} else if (navBarName.equalsIgnoreCase("ward billing")) {
+			navBarName = "InpatientList";
+		}
+		return By.xpath("//ul[@class='page-breadcrumb']/li/a[@href='#/Radiology/" + navBarName + "']");
+	}
+	
+	public By getOkButtonLocator() {
+		return By.xpath("//button[@class='btn green btn-success']");
+	}
+	
+	public By calendarFromDropdown() {
+		return By.xpath("(//input[@id='date'])[1]");
+	}
+	public By calendarToDropdown() {
+		return By.xpath("(//input[@id='date'])[2]");
+	}
+	
+	public By getStarIconLocator() {
+		return By.xpath("//i[contains(@class,'icon-favourite')]/..");
+	}
+	
 	String pageName = this.getClass().getSimpleName();
 	public dispensary_Pages(WebDriver driver) {
 		super(driver);
@@ -182,7 +215,7 @@ public class dispensary_Pages extends StartupPage {
 	/**@Test2
 	 * about this method verifyDispensaryModuleIsPresentOrNot() 
 	 * @param : null
-	 * @description : vverify the Dispensary module is present or not
+	 * @description : verify the Dispensary module is present or not
 	 * @return : Boolean
 	 * @author : Yaksha
 	 */
@@ -228,7 +261,7 @@ public class dispensary_Pages extends StartupPage {
 	/**@Test4
 	 * about this method scrollToButtomAndVerifytheFields() 
 	 * @param : null
-	 * @description :scroll to the bottom of the "Sale" page and verify that "Print Invoice" button  , "Discard" button  ,"Invoice History" and  "Credit Limitis and Balance" text are peresent or not?
+	 * @description :scroll to the bottom of the "Sale" page if required and verify that "Print Invoice" button  , "Discard" button  ,"Invoice History" and  "Credit Limitis and Balance" text are present or not?
 	 * @return : Boolean
 	 * @author : Yaksha
 	 */
@@ -257,8 +290,8 @@ public class dispensary_Pages extends StartupPage {
 	/**@Test5
 	 * about this method performTheKeyboardOperationToOpenthePopup() 
 	 * @param : null
-	 * @description :Perform the keyboard operation to open the "Add New Patient" popup Page  and verify that the popup is displayed or not.
-	 * @return : Boolean
+	 * @description :Perform the keyboard operation to open the "Add New Patient" pop up Page  and verify its title.
+	 * @return : String
 	 * @author : Yaksha
 	 */
 	public String performTheKeyboardOperationToOpenthePopup() throws Exception {
@@ -278,7 +311,7 @@ public class dispensary_Pages extends StartupPage {
 	/**@Test6
 	 * about this method validateErrorMessageInFirstnameTextfield() 
 	 * @param : null
-	 * @description : Validate the error message in "Add New Patient" form's  firstname textfield after clicking on "Ok" Button without filling any information in the form
+	 * @description : Validate the error message in "Add New Patient" form's first name text field after clicking on "OK" Button without filling any information in the form.
 	 * @return : String
 	 * @author : Yaksha
 	 */
@@ -301,7 +334,7 @@ public class dispensary_Pages extends StartupPage {
 	/**@Test7.1
 	 * about this method fillfirstNameTextFieldVerifyTheFirstName() 
 	 * @param : Map<String, String>
-	 * @description : fill First Name TextField and Verify First name
+	 * @description : fill First Name TextField and Verify First name is filled.
 	 * @return : String
 	 * @author : Yaksha
 	 */
@@ -326,7 +359,7 @@ public class dispensary_Pages extends StartupPage {
 	/**@Test7.2
 	 * about this method fillmiddelNameTextFieldVerifyThemiddleName() 
 	 * @param : Map<String, String>
-	 * @description : fill Middle Name TextField and Verify middle name
+	 * @description : fill Middle Name TextField and Verify middle name is filled.
 	 * @return : String
 	 * @author : Yaksha
 	 */
@@ -352,7 +385,7 @@ public class dispensary_Pages extends StartupPage {
 	/**@Test7.3
 	 * about this method filllastNameTextfieldVerifylastName() 
 	 * @param : Map<String, String>
-	 * @description : fill Last Name TextField and Verify Last name
+	 * @description : fill Last Name TextField and Verify Last name is filled
 	 * @return : String
 	 * @author : Yaksha
 	 */
@@ -406,7 +439,7 @@ public class dispensary_Pages extends StartupPage {
 	/**@Test7.5
 	 * about this method fillContactNumberTextFieldVerifyContactNumber() 
 	 * @param : Map<String, String>
-	 * @description : fill Contact Number TextField and Verify Contact Number
+	 * @description : fill Contact Number TextField and Verify Contact Number is filled.
 	 * @return : String
 	 * @author : Yaksha
 	 */
@@ -433,7 +466,7 @@ public class dispensary_Pages extends StartupPage {
 	 * about this method validateTheConfirmMessageOnTheNewConsumptionEntryPage() 
 	 * @param : null
 	 * @description : On the "New Consumption Entry's page, validate the confirm! Message that is "Are you sure you want to Proceed ?"
-	 * @return : Boolean
+	 * @return : String
 	 * @author : Yaksha
 	 */
 	public String validateTheConfirmMessageOnTheNewConsumptionEntryPage() throws Exception {
@@ -483,7 +516,7 @@ public class dispensary_Pages extends StartupPage {
 	 * about this method validateCreateRequisitionButtonIsPresentGoToThisPageThenValidateThePageName() 
 	 * @param : null
 	 * @description : on the stock page , please validate clicking "Create Requisition" button navigate to "Add Requisitions" page and validate the page Name.
-	 * @return : Boolean
+	 * @return : String
 	 * @author : Yaksha
 	 */
 	public String validateCreateRequisitionButtonIsPresentGoToThisPageThenValidateThePageName() throws Exception {
@@ -510,13 +543,14 @@ public class dispensary_Pages extends StartupPage {
 	 * @return : Boolean
 	 * @author : Yaksha
 	 */
-	public Boolean byClickingOnThatButtonSomeTextFieldsAreDisplyed() throws Exception {
+	public Boolean byClickingOnPlusButtonSomeTextFieldsAreDisplyed() throws Exception {
 		boolean isDisplayed = false;
 		try {
 			 commonEvents.click(plusIcon);
 			 if(commonEvents.isDisplayed(itemNameTextField)&& 
 				 commonEvents.isDisplayed(quantityTextField)&&
 				 commonEvents.isDisplayed(remarkTextField)) {
+				 commonEvents.click(cancelButtonInAddRequisition);
 				 isDisplayed=true;
 			 }
 		}catch(Exception e) {
@@ -536,7 +570,12 @@ public class dispensary_Pages extends StartupPage {
 	public String verifyPageNameOfRequisitionDetailsPage() throws Exception {
 		String pageName = "";
 		try {
-			commonEvents.click(cancelButtonInAddRequisition);
+			WebElement dateField = driver.findElement(By.xpath("(//input[@id='date'])[1]"));
+			WebElement okButton = driver.findElement(By.xpath("//button[@class='btn green btn-success']"));
+			dateField.clear(); // Clears any pre-filled value
+			dateField.sendKeys("08-01-2020"); // Pass fixed date (Format: YYYY-MM-DD)
+//			dateField.sendKeys(Keys.ENTER); // Optional: Press Enter if required
+			commonEvents.click(okButton);
 			commonEvents.click(viewIconiconOfRecentlyCreatedDocument);
 			pageName=commonEvents.getText(requisitionDetailsPrintPageName);
 			System.out.println("Page name is :" +pageName);			 
@@ -637,11 +676,6 @@ public class dispensary_Pages extends StartupPage {
 		return IsDisplayed;
 	}
 
-
-
-
-
-	//L2 Scenarios
 	/**@Test16
 	 * about this method verifyToolTipOfAnElement()
 	 * @param : null
@@ -649,7 +683,7 @@ public class dispensary_Pages extends StartupPage {
 	 * @return : String
 	 * @author : YAKSHA
 	 */
-	public String verifyToolTipOfAnElement() throws Exception {
+	public String verifyToolTipOfTheElement() throws Exception {
 		String tooltipText = "";
 		try {
 			commonEvents.click(appointmentModule);
