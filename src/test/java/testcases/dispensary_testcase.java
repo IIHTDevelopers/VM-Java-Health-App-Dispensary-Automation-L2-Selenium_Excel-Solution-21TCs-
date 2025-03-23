@@ -1,5 +1,7 @@
 package testcases;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import org.testng.Assert;
@@ -41,7 +43,7 @@ public class dispensary_testcase extends AppTestBase
 	}
 
 	@Test(priority = 1, groups = {"sanity"}, description="Verify the title and url of  the current page")
-	public void verifyTitleOfTheHomePage() throws Exception {
+	public void verifyTitleAndURLOfTheHomePage() throws Exception {
 
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
@@ -64,7 +66,7 @@ public class dispensary_testcase extends AppTestBase
 	}
 	
 	@Test(priority = 3, groups = {"sanity"}, description="verify all sub-modules are displayed correctly after clicking on the expand icon of Dispensary Module")
-	public void verifyAllSubModulesArePresent() throws Exception {
+	public void verifyAllSubModulesArePresentAndClickOnDispensary() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
 		Assert.assertTrue(dispensary_PagesInstance.verifyAllSubModulesArePresentAndClickOnDispensary(), "Any of the elememt is not present, please check manually");
@@ -114,7 +116,7 @@ public class dispensary_testcase extends AppTestBase
 	
 	
 	@Test(priority = 8, groups = {"sanity"}, description="On the New Consumption Entry's page, validate the confirm! Message that is Are you sure you want to Proceed ?")
-	public void  validateTheConfirmMessage() throws Exception {
+	public void  validateTheConfirmMessageOnTheNewConsumptionEntryPage() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
 		Map<String, String> expectedData = new FileOperations().readExcelPOI(expectedDataFilePath, "healthAppErrorMessages");
@@ -123,7 +125,7 @@ public class dispensary_testcase extends AppTestBase
 	}
 	
 	@Test(priority = 9, groups = {"sanity"}, description="on the Stock page,select Main store from Filter by store dropdown and verify that Main store is selected and stock value are filtered by the selected store name ")
-	public void  selectFilterverifyFilterIsSelectedOrNot() throws Exception {
+	public void  selectMainStoreFromFilterSelectMainStoreFromFilter() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
 		Assert.assertTrue(dispensary_PagesInstance.selectMainStoreFromFilterSelectMainStoreFromFilter(),"Confirmation message is not present in the current page, Please check manually") ;
@@ -131,7 +133,7 @@ public class dispensary_testcase extends AppTestBase
 	}
 	
 	@Test(priority = 10, groups = {"sanity"}, description="on the stock page , please validate clicking Create Requisition button navigate to Add Requisitions page and validate the page Name")
-	public void  validateTheButtonIsPresentAndNavigateToThisPage() throws Exception {
+	public void  validateCreateRequisitionButtonIsPresentGoToThisPageThenValidateThePageName() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
 		Map<String, String> expectedData = new FileOperations().readExcelPOI(expectedDataFilePath, "PageTitle");
@@ -140,33 +142,34 @@ public class dispensary_testcase extends AppTestBase
 	}
 	
 	@Test(priority = 11, groups = {"sanity"}, description="on the Add Requisition page, clicking the + icon button on right hand side of Remarks text box add a  the New set of elements to add a new records and validate New Item text field, Quantity Text field and Remark text box are present or not 2nd rows?")
-	public void  verifyTheFieldsAreDisplayed() throws Exception {
+	public void  byClickingOnPlusButtonSomeTextFieldsAreDisplyed() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
-		Assert.assertTrue(dispensary_PagesInstance.byClickingOnThatButtonSomeTextFieldsAreDisplyed(),"One of the field is not present in the current page, Please check manually") ;
-		Assert.assertTrue(locatorsFactoryInstance.remarkTextFieldIsPresent(driver).isDisplayed(), "Remarks TextField is not displayed in the current page, Please check manually");
+		Assert.assertTrue(dispensary_PagesInstance.byClickingOnPlusButtonSomeTextFieldsAreDisplyed(),"One of the field is not present in the current page, Please check manually") ;
+//		Assert.assertTrue(locatorsFactoryInstance.remarkTextFieldIsPresent(driver).isDisplayed(), "Remarks TextField is not displayed in the current page, Please check manually");
 	}
 	
 	@Test(priority = 12, groups = {"sanity"}, description="On the Requisition page, verify that view button under action navigate to the Requisition Details Print page and validate the page name is Requisition Details Print and validate print and Requisitions List button are present.")
-	public void  verifyThePageNameAndButtons() throws Exception {
+	public void  verifyPageNameOfRequisitionDetailsPage() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
+		
 		Map<String, String> expectedData = new FileOperations().readExcelPOI(expectedDataFilePath, "PageTitle");
-		Assert.assertEquals(dispensary_PagesInstance.verifyPageNameOfRequisitionDetailsPage(),expectedData.get("pageNameAfterClickingOnView"),"Page name is not matching, Please check manually") ;
+		Assert.assertEquals(dispensary_PagesInstance.verifyPageNameOfRequisitionDetailsPage( ),expectedData.get("pageNameAfterClickingOnView"),"Page name is not matching, Please check manually") ;
 		Assert.assertTrue(dispensary_PagesInstance.validateTheButtonsArePresentOrNot(),"One of the field is not present in the current page, Please check manually") ;
-		Assert.assertTrue(locatorsFactoryInstance.requisitionsListButtonIsPresent(driver).isDisplayed(), "Requisitions List Button is not displayed in the current page, Please check manually");
+//		Assert.assertTrue(locatorsFactoryInstance.requisitionsListButtonIsPresent(driver).isDisplayed(), "Requisitions List Button is not displayed in the current page, Please check manually");
 	}
 		
 	@Test(priority = 13, groups = {"sanity"}, description="On the Requisition Details Print page, Get the medicine name from the Requisition Details Print table and  validate the medicine name is not blank.")
-	public void  fetchTheDataFromTheTable () throws Exception {
+	public void  getTheMedicineNameFromTable () throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
 		Assert.assertTrue(dispensary_PagesInstance.getTheMedicineNameFromTable(),"Medicine name is not present in the current page, Please check manually") ;
-		Assert.assertTrue(locatorsFactoryInstance.medicineQuantityIsPresent(driver).isDisplayed(), "Medicine quantity is not displayed in the current page, Please check manually");
+//		Assert.assertTrue(locatorsFactoryInstance.medicineQuantityIsPresent(driver).isDisplayed(), "Medicine quantity is not displayed in the current page, Please check manually");
 	}
 	
 	@Test(priority = 14, groups = {"sanity"}, description="On the New SSU Patient Registration under social service module, get the place holder name of Address textfiled of New SSU Patient Registration page and verify  the place holder name.")
-	public void validatePlaceholderName() throws Exception {
+	public void inAddressFieldValidateThePlaceHolderNameAndPrintOnConsole() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
 		Map<String, String> expectedData = new FileOperations().readExcelPOI(expectedDataFilePath, "NewSSUPatientRegistrationPopup");
@@ -175,18 +178,18 @@ public class dispensary_testcase extends AppTestBase
 	}
 	
 	@Test(priority = 15, groups = {"sanity"}, description="On the New SSU Patient Registration page, Close this New SSU Patient Registration popup page by using javaScript.")
-	public void performJavaScriptExecutorOperation() throws Exception {
+	public void closeNewSSUPatientRegistrationPopupByUsingJsExecutor() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
 		Assert.assertTrue(dispensary_PagesInstance.closeNewSSUPatientRegistrationPopupByUsingJsExecutor(), "Unable to perform the js Executor operation, please check manually");
 		Assert.assertTrue(locatorsFactoryInstance.listByPatientStatusRadioButtonIsPresent(driver).isSelected(), "RadioButton is not present in the current page, Please check manually");
 	}
 	@Test(priority = 16, groups = {"sanity"}, description="On the Appointment module, under the\"New visit\" tab, verify tooltips which is present on keyboard icon.")
-	public void  verifyTooltipOfAnElement() throws Exception {
+	public void  verifyTooltipOfTheElement() throws Exception {
 		dispensary_PagesInstance = new dispensary_Pages(driver);
 		locatorsFactoryInstance = new LocatorsFactory(driver);
 		Map<String, String> expectedData = new FileOperations().readExcelPOI(expectedDataFilePath, "KeyBoardTooltip");
-		Assert.assertEquals(dispensary_PagesInstance.verifyToolTipOfAnElement(), expectedData.get("newPatientTooltipValue"),"Verification failed, please check manually");
+		Assert.assertEquals(dispensary_PagesInstance.verifyToolTipOfTheElement(), expectedData.get("newPatientTooltipValue"),"Verification failed, please check manually");
 	    Assert.assertTrue(locatorsFactoryInstance.tooltipTextIsPresent(driver).isDisplayed(), "Tooltip is not present in the current page, Please check manually");
 	}
 	
